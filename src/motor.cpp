@@ -9,7 +9,7 @@ void setupMOTOR(){
     pinMode(DIR_PIN, OUTPUT);
 }
 
-void motorUP( bool verbose=false) {
+void motorUP( bool verbose) {
     digitalWrite(DIR_PIN, HIGH);
     analogWrite(PWM_PIN, CONSTANT_SPEED);
     if (verbose) {
@@ -17,7 +17,7 @@ void motorUP( bool verbose=false) {
     }
 }
 
-void motorDOWN(bool verbose=false) {
+void motorDOWN(bool verbose) {
     digitalWrite(DIR_PIN, LOW);
     analogWrite(PWM_PIN, CONSTANT_SPEED);
     if (verbose) {
@@ -25,7 +25,7 @@ void motorDOWN(bool verbose=false) {
     }
 }
 
-void motorREST(bool verbose=false) {
+void motorREST(bool verbose) {
     digitalWrite(DIR_PIN, 0);
     if (verbose) {
         Serial.println("MOTOR REST");
@@ -34,8 +34,8 @@ void motorREST(bool verbose=false) {
 
 void stateBasedMovement(State currentState) {
     switch(currentState) {
-        case UP: motorUP; break;
-        case DOWN: motorDOWN; break;
-        case REST: motorREST; break;
+        case UP: motorUP(); break;
+        case DOWN: motorDOWN(); break;
+        case REST: motorREST(); break;
     }
 }

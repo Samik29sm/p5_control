@@ -17,7 +17,7 @@ void setupIMU() {
     bno.setExtCrystalUse(true);
 }
 
-bool calibration(bool gyroBasedCalibration, bool accelBasedCalibration, bool magBasedCalibration, bool verbose=false) {
+bool calibration(bool gyroBasedCalibration, bool accelBasedCalibration, bool magBasedCalibration, bool verbose) {
     uint8_t system_cal, gyro, accel, mag;
     bno.getCalibration(&system_cal, &gyro, &accel, &mag);
     bool gyroCalibrated = !gyroBasedCalibration || (gyro == 3);
@@ -53,7 +53,7 @@ float readPitch() {
     return pitch;
 }
 
-void accelBasedControl (float accZ, State *currentState, bool *stateChanged, bool verbose=false) {
+void accelBasedStateChange (float accZ, State *currentState, bool *stateChanged, bool verbose) {
     if (accZ > IMU_ACCEL_THRESHOLD_CHANGE_HIGH){
       *currentState = UP;
       *stateChanged = true;
@@ -82,7 +82,7 @@ void accelBasedControl (float accZ, State *currentState, bool *stateChanged, boo
     }
 }
 
-void pitchBasedControl(float rawPitch, float prevPitch, State *currentState, bool *stateChanged, bool verbose=false) {
+void pitchBasedStateChange(float rawPitch, float prevPitch, State *currentState, bool *stateChanged, bool verbose) {
     float diffPitch = abs(prevPitch) - abs(rawPitch);
 
     if (diffPitch < 0 && abs(diffPitch) > IMU_PITCH_THRESHOLD_MOVE) {

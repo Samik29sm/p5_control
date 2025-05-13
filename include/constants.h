@@ -5,7 +5,7 @@
 enum State { REST, UP, DOWN };
 
 // Control Modes
-enum ControlMode { JOYSTICK, FLEXSENSOR, IMU };
+enum ControlMode { JOYSTICK, FLEXSENSOR, IMU_accel, IMU_pitch };
 
 //  Motor constant speed (max PWM = 255)
 const int CONSTANT_SPEED = 255;
@@ -25,5 +25,9 @@ const int CONSTANT_SPEED = 255;
 #define IMU_ACCEL_THRESHOLD_REST_LOW -0.1
 #define IMU_PITCH_THRESHOLD_MOVE 10
 #define IMU_PITCH_THRESHOLD_REST 5
+
+// FLEXSENSOR 
+#define FLEXSENSOR_THRESHOLD_UP -30.0
+#define FLEXSENSOR_THRESHOLD_DOWN 60.0
 
 #endif

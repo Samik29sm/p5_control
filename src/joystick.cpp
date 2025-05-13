@@ -6,7 +6,7 @@ void setupJOYSTICK(){
     digitalWrite(SW_PIN, HIGH);
 }
 
-void readJOYSTICK(int *x, int *y, int *sw, bool verbose=false){
+void readJOYSTICK(int *x, int *y, int *sw, bool verbose){
     *x = analogRead(X_PIN);
     *y = analogRead(Y_PIN);
     *sw = digitalRead(SW_PIN);
@@ -21,25 +21,40 @@ void readJOYSTICK(int *x, int *y, int *sw, bool verbose=false){
     }
 }
 
-void processJOYSTICK(int x, int sw, bool *prevSwitchState, bool *controlMode, ControlMode control, State *prevState, State *currentState, bool verbose=false) {
+void readJOYSTICK_X(int *x, bool verbose){
+    *x = analogRead(X_PIN);
+    if (verbose) {
+        Serial.print("X: ");
+        Serial.print(*x);
+    }
+}
+
+void readJOYSTICK_SW(int *sw, bool verbose){
+    *sw = digitalRead(SW_PIN);
+
+    if (verbose) {
+        Serial.print(" SW: ");
+        Serial.println(*sw);
+    }
+}
+
+void processJOYSTICK(int sw, bool *prevSwitchState, ControlMode *controlMode, ControlMode control, bool verbose) {
     // Switch control mode if switch is pressed
     if (sw == LOW && *prevSwitchState == HIGH) {
         *controlMode = JOYSTICK;
-        if (verbose) {
-            Serial.println("Control Mode: Joystick");
-        }
     }
     else if (sw == HIGH && *prevSwitchState == LOW) {
         *controlMode = control;
-        if (verbose) {
-            Serial.print("Control Mode:");
-        Serial.println(control == FLEXSENSOR ? " Flexsensor" : " IMU");
-        }
     }
     *prevSwitchState = sw;
+    if (verbose) {
+            Serial.print("Control Mode:");
+            Serial.println(*controlMode);
+    }
+}
 
+void joystickBasedStateChange(int x, State *prevState, State *currentState, bool verbose) {
     // Update state based on X-axis value
-
     if (x >= JOYSTICK_UP_THRESHOLD_LOW && x <= JOYSTICK_UP_THRESHOLD_HIGH) {
         *currentState = UP;
     } else if (x >= JOYSTICK_DOWN_THRESHOLD_LOW && x <= JOYSTICK_DOWN_THRESHOLD_HIGH) {

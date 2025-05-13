@@ -6,6 +6,7 @@
 #include "config.h"
 
 void setupFLEXSENSOR();
-void readFLEXSENSOR(int *value, bool verbose=false);
+void readFLEXSENSOR(float *angle, bool verbose=false);
+void flexsensorBasedStateChange(float angle, State *currentState, bool *stateChanged, bool verbose=false);
 
 #endif

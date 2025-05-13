@@ -6,23 +6,42 @@ void setupFLEXSENSOR() {
     pinMode(FLEXSENSOR_PIN, INPUT);
 }
 
-void readFLEXSENSOR(int *value, bool verbose=false) {
-    // Read the flex sensor value
-    *value = analogRead(FLEXSENSOR_PIN);
-    if (verbose) {
-        Serial.print("Flexsensor Value: ");
-        Serial.println(*value);
-    }
-
-
-    // Read the ADC, and calculate voltage and resistance from it
+void readFLEXSENSOR(float *angle, bool verbose) {
 	int ADCflex = analogRead(FLEXSENSOR_PIN);
 	float Vflex = ADCflex * FLEXSENSOR_VCC / 1023.0;
 	float Rflex = FLEXSENSOR_RDIV * (FLEXSENSOR_VCC / Vflex - 1.0);
-	Serial.println("Resistance: " + String(Rflex) + " ohms");
+	*angle = map(Rflex, FLEXSENSOR_FLATR, FLEXSENSOR_BENDR, 0, 90.0);
+    if (verbose) {
+        Serial.print("Flexsensor Resistance: ");
+        Serial.println(Rflex);
+        Serial.print("Flexsensor Angle: ");
+        Serial.println(*angle);
+    }
+}
 
-	// Use the calculated resistance to estimate the sensor's bend angle:
-	float angle = map(Rflex, FLEXSENSOR_FLATR, FLEXSENSOR_BENDR, 0, 90.0);
-	Serial.println("Bend: " + String(angle) + " degrees");
-	Serial.println();
+void flexsensorBasedStateChange(float angle, State *currentState, bool *stateChanged, bool verbose) {
+    if (angle <= FLEXSENSOR_THRESHOLD_UP) {
+        *currentState = UP;
+        *stateChanged = true;
+        if (verbose) {
+            Serial.print("Up: ");
+            Serial.println(angle);
+        }
+    } else if (angle >= FLEXSENSOR_THRESHOLD_DOWN){
+        *currentState = DOWN;
+        *stateChanged = true;
+        if (verbose) {
+            Serial.print("Down: ");
+            Serial.println(angle);
+        }
+    } else {
+        if (*currentState != REST) {
+            *currentState = REST;
+            *stateChanged = true;
+            if (verbose) {
+                Serial.print("Rest: ");
+                Serial.println(angle);
+            }
+        }
+    }
 }

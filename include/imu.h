@@ -12,5 +12,10 @@ extern Adafruit_BNO055 bno;
 
 void setupIMU();
 bool calibration(bool gyroBasedCalibration, bool accelBasedCalibration, bool magBasedCalibration, bool verbose=false);
+float readAccel();
+float readPitch();
+void accelBasedStateChange (float accZ, State *currentState, bool *stateChanged, bool verbose=false);
+void pitchBasedStateChange(float rawPitch, float prevPitch, State *currentState, bool *stateChanged, bool verbose=false);
+
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "constants.h"
 #include "config.h"
+#include "control.h"
 #include "motor.h"
 #include "constants.h"
 #include "joystick.h"
@@ -10,18 +11,19 @@
 #include "imu.h"
 #include "flexsensor.h"
 
+const bool verbose = true;
 
 // State Variables
-bool controlMode = false;
 State currentState = REST;
 State prevState = REST;
 bool prevSwitchState = HIGH;
 
-// Control Mode: flexsensor or IMU, joystick if switch is pressed
+// Control Mode: flexsensor or IMU based on acceleration or pitch, joystick if switch is pressed
 ControlMode control = FLEXSENSOR;
-// ControlMode control = IMU;
+// ControlMode control = IMU_accel;
+// ControlMode control = IMU_pitch;
 
-const bool verbose = true;
+ControlMode controlMode = control;
 
 void setup() {
   // Initialize serial communication
@@ -31,16 +33,24 @@ void setup() {
   setupJOYSTICK();
   if (control == FLEXSENSOR) {
     setupFLEXSENSOR();
-  } else if (control == IMU) {
+  } else if (control == IMU_accel or control == IMU_pitch) {
     setupIMU();
   }
 }
 
 void loop() {
-  // Read joystick values 
-  int x, y, sw;
-  readJOYSTICK(&x, &y, &sw, verbose);
-  processJOYSTICK(x, sw, &prevSwitchState, &controlMode, control, &prevState, &currentState, verbose);
-  delay(200);
-}
+  // Read joystick value of the switch
+  int sw;
+  readJOYSTICK_SW(&sw, verbose);
+  processJOYSTICK(sw, &prevSwitchState, &controlMode, control, verbose);
 
+  // Control based on the selected mode
+  switch(controlMode) {
+    case FLEXSENSOR: flexsensorBasedControl(&prevState, &currentState, verbose); break;
+    case IMU_accel: accelBasedControl(&prevState, &currentState, verbose); break;
+    case IMU_pitch: pitchBasedControl(&prevState, &currentState, verbose); break; 
+    case JOYSTICK: joystickBasedControl(&prevState, &currentState, verbose); break;
+  }
+
+  delay(500);
+}
