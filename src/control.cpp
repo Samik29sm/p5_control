@@ -4,14 +4,14 @@ float prevPitch = 0.0; // Previous pitch value for IMU-based control
 float prevAccel = 0.0; // Previous acceleration value for IMU-based control
 
 void flexsensorBasedControl(State *prevState, State *currentState, bool verbose) {
-    Serial.print("enter flexsensorBasedControl");
     float angle;
     bool stateChanged = false;
     readFLEXSENSOR(&angle, verbose);
     flexsensorBasedStateChange(angle, currentState, &stateChanged, verbose);
+    Serial.println(stateChanged);
     if (stateChanged) {
+        stateBasedMovement(prevState, currentState, verbose);
         *prevState = *currentState;
-        stateBasedMovement(prevState, currentState);
     }
 }
 
