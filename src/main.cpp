@@ -18,8 +18,8 @@ State currentState = REST;
 State prevState = REST;
 
 // Control Mode: flexsensor or IMU based on acceleration or pitch, joystick if switch is pressed
-ControlMode control = JOYSTICK; 
-// ControlMode control = FLEXSENSOR;
+// ControlMode control = JOYSTICK; 
+ControlMode control = FLEXSENSOR;
 // ControlMode control = IMU_accel;
 // ControlMode control = IMU_pitch;
 
@@ -41,12 +41,12 @@ void setup() {
 void loop() {
   // Read joystick value of the switch
   int sw;
-  readJOYSTICK_SW(&sw);
-  // Serial.print("control before: ");
-  // Serial.println(controlMode);
+  readJOYSTICK_SW(&sw, verbose);
+  Serial.print("control before: ");
+  Serial.println(controlMode);
   processJOYSTICK(sw, &controlMode, control, verbose);
-  // Serial.print("control after: ");
-  // Serial.println(controlMode);
+  Serial.print("control after: ");
+  Serial.println(controlMode);
 
   // Control based on the selected mode
   switch(controlMode) {
@@ -55,6 +55,5 @@ void loop() {
     case IMU_pitch: pitchBasedControl(&prevState, &currentState, verbose); break; 
     case JOYSTICK: joystickBasedControl(&prevState, &currentState, verbose); break;
   }
-
   delay(100);
 }

@@ -20,7 +20,6 @@ void readFLEXSENSOR(float *angle, bool verbose) {
 }
 
 void flexsensorBasedStateChange(float angle, State *currentState, bool *stateChanged, bool verbose) {
-    Serial.print("enter flexsensorBasedStateChange");
     if (angle <= FLEXSENSOR_THRESHOLD_UP) {
         *currentState = UP;
         *stateChanged = true;
