@@ -3,25 +3,26 @@
 float prevPitch = 0.0; // Previous pitch value for IMU-based control
 float prevAccel = 0.0; // Previous acceleration value for IMU-based control
 
-void flexsensorBasedControl(State *prevSate, State *currentState, bool verbose) {
+void flexsensorBasedControl(State *prevState, State *currentState, bool verbose) {
+    Serial.print("enter flexsensorBasedControl");
     float angle;
     bool stateChanged = false;
     readFLEXSENSOR(&angle, verbose);
     flexsensorBasedStateChange(angle, currentState, &stateChanged, verbose);
     if (stateChanged) {
-        *prevSate = *currentState;
-        stateBasedMovement(*currentState);
+        *prevState = *currentState;
+        stateBasedMovement(prevState, currentState);
     }
 }
 
-void accelBasedControl(State *prevSate, State *currentState, bool verbose) {
+void accelBasedControl(State *prevState, State *currentState, bool verbose) {
     if (calibration(false, true, false, verbose)) {
         float accel = readAccel();
         bool stateChanged = false;
         accelBasedStateChange(accel, currentState, &stateChanged, verbose);
         if (stateChanged) {
-            *prevSate = *currentState;
-            stateBasedMovement(*currentState);
+            *prevState = *currentState;
+            stateBasedMovement(prevState, currentState);
         }
         prevAccel = accel; 
     }
@@ -31,14 +32,14 @@ void accelBasedControl(State *prevSate, State *currentState, bool verbose) {
 }
 
 
-void pitchBasedControl(State *prevSate, State *currentState, bool verbose) {
+void pitchBasedControl(State *prevState, State *currentState, bool verbose) {
     if (calibration(true, false, false, verbose)) {
         float pitch = readPitch();
         bool stateChanged = false;
         pitchBasedStateChange(pitch, prevPitch, currentState, &stateChanged, verbose);
         if (stateChanged) {
-            *prevSate = *currentState;
-            stateBasedMovement(*currentState);
+            *prevState = *currentState;
+            stateBasedMovement(prevState, currentState, verbose);
         }
         prevPitch = pitch;
     }
@@ -47,9 +48,9 @@ void pitchBasedControl(State *prevSate, State *currentState, bool verbose) {
     }
 }
 
-void joystickBasedControl(State *prevSate, State *currentState, bool verbose) {
+void joystickBasedControl(State *prevState, State *currentState, bool verbose) {
     int x;
     readJOYSTICK_X(&x, verbose);
-    joystickBasedStateChange(x, prevSate, currentState);
-    stateBasedMovement(*currentState);
+    joystickBasedStateChange(x, prevState, currentState, verbose);
+    stateBasedMovement(prevState, currentState, verbose);
 }

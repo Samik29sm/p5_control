@@ -9,6 +9,9 @@ void setupMOTOR();
 void motorUP(bool verbose=false);
 void motorDOWN(bool verbose=false);
 void motorREST(bool verbose=false);
-void stateBasedMovement(State currentState);
+void rampPWM(int startPWM, int endPWM, bool direction, bool verbose=false);
+void rampPWMUP(int startPWM, int endPWM, bool direction, bool verbose=false);
+void rampPWMDOWN(int startPWM, int endPWM, bool direction, bool verbose=false);
+void stateBasedMovement(State *prevState, State *currentState, bool verbose=false);
 
 #endif

@@ -9,6 +9,8 @@ enum ControlMode { JOYSTICK, FLEXSENSOR, IMU_accel, IMU_pitch };
 
 //  Motor constant speed (max PWM = 255)
 const int CONSTANT_SPEED = 255;
+const int RAMP_DELAY = 20;   // time btw PWM step
+const int STEP_SIZE = 5;     // PWM step size
 
 
 // Joystick
