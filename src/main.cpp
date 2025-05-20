@@ -10,6 +10,7 @@
 #include "motor.h"
 #include "imu.h"
 #include "flexsensor.h"
+#include "switch.h"
 
 const bool verbose = true;
 
@@ -30,6 +31,7 @@ void setup() {
   Serial.begin(SERIAL_SPEED);
 
   setupMOTOR();
+  setupSWITCH();
   setupJOYSTICK();
   if (control == FLEXSENSOR) {
     setupFLEXSENSOR();
@@ -41,10 +43,10 @@ void setup() {
 void loop() {
   // Read joystick value of the switch
   int sw;
-  readJOYSTICK_SW(&sw, verbose);
+  readSWITCH(&sw, verbose);
   Serial.print("control before: ");
   Serial.println(controlMode);
-  processJOYSTICK(sw, &controlMode, control, verbose);
+  processSWITCH(sw, &controlMode, control, verbose);
   Serial.print("control after: ");
   Serial.println(controlMode);
 
