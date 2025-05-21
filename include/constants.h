@@ -10,7 +10,8 @@ enum ControlMode { JOYSTICK, FLEXSENSOR, IMU_accel, IMU_pitch };
 //  Motor constant speed (max PWM = 255)
 const int CONSTANT_SPEED = 255;
 const int RAMP_DELAY = 20;   // time btw PWM step
-const int STEP_SIZE = 5;     // PWM step size
+const int STEP_SIZE_DOWN = 5;      // PWM step size when going down 
+const int STEP_SIZE_UP = 3;     // PWM step size when going up
 
 
 // Joystick
@@ -27,7 +28,7 @@ const int STEP_SIZE = 5;     // PWM step size
 #define IMU_PITCH_THRESHOLD_REST 5
 
 // FLEXSENSOR 
-#define FLEXSENSOR_THRESHOLD_UP -400.0
+#define FLEXSENSOR_THRESHOLD_UP -300.0
 #define FLEXSENSOR_THRESHOLD_DOWN -150.0
 
 #endif

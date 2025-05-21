@@ -26,8 +26,8 @@ void motorDOWN(bool verbose) {
     }
 }
 
-void rampPWM(int startPWM, int endPWM, bool direction, bool verbose){
-    int step = (startPWM < endPWM) ? STEP_SIZE : -STEP_SIZE;
+void rampPWM(int startPWM, int endPWM, int step_size, bool direction, bool verbose){
+    int step = (startPWM < endPWM) ? step_size : -step_size;
     digitalWrite(DIR_PIN, direction ? HIGH : LOW);
     for (int pwm = startPWM; pwm!= endPWM; pwm += step){
         pwm = constrain(pwm, 0, 255);
@@ -41,14 +41,14 @@ void rampPWM(int startPWM, int endPWM, bool direction, bool verbose){
 }
 
 void rampPWMUP(bool verbose){
-    rampPWM(0, CONSTANT_SPEED, true, verbose);
+    rampPWM(0, CONSTANT_SPEED, STEP_SIZE_UP, true, verbose);
     if (verbose) {
         Serial.println("MOTOR UP - rampPWM");
     }
 }
 
 void rampPWMDOWN(bool verbose){
-    rampPWM(0, CONSTANT_SPEED, false, verbose);
+    rampPWM(0, CONSTANT_SPEED, STEP_SIZE_DOWN, false, verbose);
     if (verbose) {
         Serial.println("MOTOR DOWN - rampPWM");
     }
