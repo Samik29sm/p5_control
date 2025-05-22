@@ -21,6 +21,14 @@ const int X_PIN = 1; // analog pin connected to X output
 // Switch configuration 
 const int SW_PIN = 2; // analog pin connected to switch output
 
+// RGB LED configuration
+const int RED_PIN = 3;   // Red LED pin
+const int GREEN_PIN = 5; // Green LED pin
+const int BLUE_PIN = 6;  // Blue LED pin
+
+// Battery reader configuration
+const int BATTERY_PIN = A3; // Analog pin for battery voltage
+
 // Flexsensor configuration
 const int FLEXSENSOR_PIN = A4;
 const int FLEXSENSOR_VCC = 5;
