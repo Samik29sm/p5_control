@@ -49,8 +49,8 @@ void pitchBasedControl(State *prevState, State *currentState, bool verbose) {
 }
 
 void joystickBasedControl(State *prevState, State *currentState, bool verbose) {
-    int x;
-    readJOYSTICK_X(&x, verbose);
-    joystickBasedStateChange(x, prevState, currentState, verbose);
+    int y;
+    readJOYSTICK_Y(&y, verbose);
+    joystickBasedStateChange(y, prevState, currentState, verbose);
     stateBasedMovement(prevState, currentState, verbose);
 }

@@ -16,7 +16,7 @@ const int PWM_PIN = 9;   // Motor speed via PWM
 const int DIR_PIN = 8;   // Motor direction
 
 // Joystick configuration - B103 348
-const int X_PIN = 1; // analog pin connected to X output
+const int Y_PIN = 1; // analog pin connected to X output
 
 // Switch configuration 
 const int SW_PIN = 2; // analog pin connected to switch output
