@@ -203,7 +203,7 @@ To add a new control mode, follow these steps:
 4. **Define the constants you need** in `constants.h`.
 5. **Implement the control logic** in a corresponding `newcontrol.cpp` file in the `src/` directory:
     - Implement a setup function to initialize the new control mode.
-    - Implement a `newcontrolBasedStateChange` function to handle state changes (`UP`, `DOWN`, `REST`) based on the new control mode. It needs to have this definition `void newcontrolBasedStateChange(State *prevState, State *currentState, bool verbose=false);`, modifying the previous and current state based on the new sensor. See `flexsensor.cpp` for an example.
+    - Implement a `newcontrolBasedStateChange` function to handle state changes (`UP`, `DOWN`, `REST`) based on the new control mode. It needs to have this definition: `void newcontrolBasedStateChange(State *prevState, State *currentState, bool verbose=false);`, modifying the previous and current state based on the new sensor input, no other arguments are allowed. See `flexsensor.cpp` for an example.
     - You can add additional functions as needed for your control mode logic, as reading inputs functions for example.
 6. **Update the `control.cpp` file** to handle your new control mode:
     ```cpp
