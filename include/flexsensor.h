@@ -7,6 +7,6 @@
 
 void setupFLEXSENSOR();
 void readFLEXSENSOR(float *angle, bool verbose=false);
-void flexsensorBasedStateChange(float angle, State *currentState, bool *stateChanged, bool verbose=false);
+void flexsensorBasedStateChange(State *prevState, State *currentState, bool verbose=false);
 
 #endif

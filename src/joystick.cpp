@@ -13,7 +13,10 @@ void readJOYSTICK_Y(int *y, bool verbose){
 }
 
 
-void joystickBasedStateChange(int y, State *prevState, State *currentState, bool verbose) {
+void joystickBasedStateChange(State *prevState, State *currentState, bool verbose) {
+    // Read y value
+    int y;
+    readJOYSTICK_Y(&y, verbose);
     // Update state based on Y-axis value
     *prevState = *currentState;
     if (y <= JOYSTICK_DOWN_THRESHOLD) {

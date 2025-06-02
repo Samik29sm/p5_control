@@ -11,16 +11,11 @@
 #include "led.h"
 #include "battery.h"
 
-const bool verbose = false;
-
 // State Variables
 State currentState = REST;
 State prevState = REST;
 
-ControlMode control = JOYSTICK; 
-// ControlMode control = FLEXSENSOR;
-
-ControlMode controlMode = control;
+ControlMode controlMode = DEFAULT_CONTROL;
 
 void setup() {
   // Initialize serial communication
@@ -31,7 +26,7 @@ void setup() {
   setupJOYSTICK();
   setupLED();
   setupBATTERY();
-  if (control == FLEXSENSOR) {
+  if (DEFAULT_CONTROL == FLEXSENSOR) {
     setupFLEXSENSOR();
   }
 }
@@ -39,26 +34,29 @@ void setup() {
 void loop() {
   // Read battery voltage
   float voltage;
-  readBATTERY(&voltage, verbose);
+  readBATTERY(&voltage, VERBOSE);
   // Control LED based on battery voltage
-  controlLED(&voltage, verbose);
+  controlLED(&voltage, VERBOSE);
   // Read joystick value of the switch
   int sw;
-  readSWITCH(&sw, verbose);
-  if (verbose) {
+  readSWITCH(&sw, VERBOSE);
+  if (VERBOSE) {
     Serial.print("control before: ");
     Serial.println(controlMode);
   }
-  processSWITCH(sw, &controlMode, control, verbose);
-  if (verbose) {
+  processSWITCH(sw, &controlMode, DEFAULT_CONTROL, VERBOSE);
+  if (VERBOSE) {
     Serial.print("control after: ");
     Serial.println(controlMode);
   }
 
   // Control based on the selected mode
-  switch(controlMode) {
-    case FLEXSENSOR: flexsensorBasedControl(&prevState, &currentState, verbose); break;
-    case JOYSTICK: joystickBasedControl(&prevState, &currentState, verbose); break;
+  ControlFunc controlFunction = getControlFunction(controlMode);
+  if (controlFunction) {
+    controlMotor(controlFunction, &prevState, &currentState, VERBOSE);
+  } 
+  else {
+    Serial.println("Invalid control function");
   }
   delay(100);
 }

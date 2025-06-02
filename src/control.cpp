@@ -1,22 +1,19 @@
 #include "control.h"
 
-void flexsensorBasedControl(State *prevState, State *currentState, bool verbose) {
-    float angle;
-    bool stateChanged = false;
-    readFLEXSENSOR(&angle, verbose);
-    flexsensorBasedStateChange(angle, currentState, &stateChanged, verbose);
-    Serial.println(stateChanged);
-    if (stateChanged) {
-        stateBasedMovement(prevState, currentState, verbose);
-        *prevState = *currentState;
+ControlFunc controlTable[] = {
+    joystickBasedStateChange,    // JOYSTICK
+    flexsensorBasedStateChange,   // FLEXSENSOR
+};
+
+ControlFunc getControlFunction(ControlMode mode) {
+    const int numModes = sizeof(controlTable) / sizeof(ControlFunc);
+    if (mode < 0 || mode >= numModes) {
+        return nullptr;
     }
+    return controlTable[mode];
 }
 
-
-
-void joystickBasedControl(State *prevState, State *currentState, bool verbose) {
-    int y;
-    readJOYSTICK_Y(&y, verbose);
-    joystickBasedStateChange(y, prevState, currentState, verbose);
+void controlMotor(ControlFunc BasedStateChangeFCT, State *prevState, State *currentState, bool verbose) {
+    BasedStateChangeFCT(prevState, currentState, verbose);
     stateBasedMovement(prevState, currentState, verbose);
 }

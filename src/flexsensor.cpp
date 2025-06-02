@@ -19,29 +19,23 @@ void readFLEXSENSOR(float *angle, bool verbose) {
     }
 }
 
-void flexsensorBasedStateChange(float angle, State *currentState, bool *stateChanged, bool verbose) {
+void flexsensorBasedStateChange(State *prevState, State *currentState, bool verbose) {
+    float angle;
+    readFLEXSENSOR(&angle, verbose);
     if (angle <= FLEXSENSOR_THRESHOLD_UP) {
         *currentState = UP;
-        *stateChanged = true;
-        if (verbose) {
-            Serial.print("Up: ");
-            Serial.println(angle);
-        }
     } else if (angle >= FLEXSENSOR_THRESHOLD_DOWN){
         *currentState = DOWN;
-        *stateChanged = true;
-        if (verbose) {
-            Serial.print("Down: ");
-            Serial.println(angle);
-        }
     } else {
-        if (*currentState != REST) {
-            *currentState = REST;
-            *stateChanged = true;
-            if (verbose) {
-                Serial.print("Rest: ");
-                Serial.println(angle);
-            }
+        *currentState = REST;
+    }
+    if (verbose && *currentState != *prevState) {
+        switch (*currentState) {
+            case UP: Serial.println("State: UP"); break;
+            case DOWN: Serial.println("State: DOWN"); break;
+            case REST: Serial.println("State: REST"); break;
         }
+        Serial.print("Angle: ");
+        Serial.println(angle);
     }
 }

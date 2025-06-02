@@ -25,9 +25,6 @@ void processSWITCH(int sw, ControlMode *controlMode, ControlMode control, bool v
     
     if (verbose) {
         Serial.print("Control Mode:");
-        switch (*controlMode){
-            case FLEXSENSOR: Serial.println("FLEXSENSOR"); break;
-            case JOYSTICK: Serial.println("JOYSTICK"); break;
-        }
+        Serial.print(*controlMode);
     }
 }

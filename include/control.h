@@ -10,7 +10,14 @@
 #include "flexsensor.h"
 
 
-void flexsensorBasedControl(State *prevState, State *currentState, bool verbose=false);
-void joystickBasedControl(State *prevState, State *currentState, bool verbose=false);
+typedef void (*ControlFunc)(State *prev, State *curr, bool verbose);
+
+// Function table indexed by ControlMode enum
+extern ControlFunc controlTable[]; 
+
+// Function to get the control function based on the ControlMode    
+ControlFunc getControlFunction(ControlMode mode);
+
+void controlMotor(ControlFunc BasedStateChangeFCT, State *prevState, State *currentState, bool verbose=false);
 
 #endif

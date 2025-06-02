@@ -1,14 +1,13 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-// Arm States
-enum State { REST, UP, DOWN };
+#include "types.h"
 
-// Control Modes
-enum ControlMode { JOYSTICK, FLEXSENSOR};
+const bool VERBOSE = true; // Set to true for verbose output
 
-// Color LED
-enum Color { RED, GREEN, BLUE, OFF };
+const ControlMode DEFAULT_CONTROL = JOYSTICK;
+// const ControlMode DEFAULT_CONTROL = FLEXSENSOR;
+
 
 //  Motor constant speed (max PWM = 255)
 const int CONSTANT_SPEED = 255;
@@ -23,15 +22,13 @@ const int STEP_SIZE_UP = 3;     // PWM step size when going up
 const float BATTERY_THRESHOLD_MEDIUM = 3.88;
 const float BATTERY_THRESHOLD_EMPTY = 3.672;
 
+// LED display value
 const int LED_DISPLAY = 1;
-
-
 
 // Joystick
 #define JOYSTICK_REST_POSITION 532
 #define JOYSTICK_DOWN_THRESHOLD 450
 #define JOYSTICK_UP_THRESHOLD 800
-
 
 // FLEXSENSOR 
 #define FLEXSENSOR_THRESHOLD_UP -300.0
