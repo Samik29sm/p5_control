@@ -8,7 +8,6 @@
 // Switch: A2
 // Flexsensor: A3
 // Motor: D8
-// IMU: I2C
 
 
 // Motor configuration - Pins for MD13S
