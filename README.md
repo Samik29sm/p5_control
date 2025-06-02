@@ -130,7 +130,7 @@ build_flags = -D SERIAL_SPEED=115200
 
 ### 4. 🎮 Changing Control Modes
 
-The default mode is set in the `main.h` file.
+The default mode is set in the `constants.h` file.
 
 It is initially set to use the joystick only as the control.
 ```cpp
@@ -186,12 +186,6 @@ You also need to configure the flexsensor constants in the `config.h` file, such
      ```
 
 
-## 📚 References
-
-- [Arduino Documentation](https://docs.arduino.cc/)
-- [PlatformIO Documentation](https://docs.platformio.org/en/latest/)
-- [Flex Sensor Guide](https://lastminuteengineers.com/flex-sensor-arduino-tutorial/)
-
 
 ## 🏗️ Add your own Control Mode
 
@@ -209,7 +203,7 @@ To add a new control mode, follow these steps:
 4. **Define the constants you need** in `constants.h`.
 5. **Implement the control logic** in a corresponding `newcontrol.cpp` file in the `src/` directory:
     - Implement a setup function to initialize the new control mode.
-    - Implement a `newcontrolBasedStateChange` function to handle state changes (`UP`, `DOWN`, `REST`) based on the new control mode. It needs to take in argument `State *currentState` and `bool *stateChanged` that will be modified if the state has changed. See `flexsensor.cpp` for an example.
+    - Implement a `newcontrolBasedStateChange` function to handle state changes (`UP`, `DOWN`, `REST`) based on the new control mode. It needs to have this definition `void newcontrolBasedStateChange(State *prevState, State *currentState, bool verbose=false);`, modifying the previous and current state based on the new sensor. See `flexsensor.cpp` for an example.
     - You can add additional functions as needed for your control mode logic, as reading inputs functions for example.
 6. **Update the `control.cpp` file** to handle your new control mode:
     ```cpp
@@ -220,11 +214,19 @@ To add a new control mode, follow these steps:
     };
     ```
     Note that the order of the functions in the `controlTable` array must match the order of the `ControlMode` enum values defined in `types.h`.
-7. **Modify the `main.cpp` file** to include your new control mode:
+7. **Modify the `main.cpp` file** to include your new control mode setup:
    - Call the setup function for your new control mode in the `setup()` function.
 8. **Switch to your new control mode** in the `constants.h` file:
     ```cpp
     const ControlMode DEFAULT_CONTROL = NEWCONTROL;
     ```
+
+
+
+## 📚 References
+
+- [Arduino Documentation](https://docs.arduino.cc/)
+- [PlatformIO Documentation](https://docs.platformio.org/en/latest/)
+- [Flex Sensor Guide](https://lastminuteengineers.com/flex-sensor-arduino-tutorial/)
 
 
