@@ -4,7 +4,7 @@ The following code is part of a project that aims to create an arm support devic
 
 This project is an Arduino-based motor control system that supports multiple input methods:
 - 🎮 Joystick
-- 📏 Flex Sensor
+- 📏 Flex Sensor that can be fixed on a finger
 
 The system supports **dynamic control mode switching**. This code was developed in order to implement easily sensor based control, having always the possibility to switch to joystick control. At the end you can found a simple procedure to add another input method is needed.
 
@@ -30,10 +30,10 @@ NOTE: For the Assistive Technologies Challenge, the user cannot use the flex sen
 
     IF Control Mode is set to **Flex Sensor**: 
     - By default, the system starts in Flex Sensor mode.
-    - Press the switch button to toggle between joystick and flex sensor control modes.
+    - Press the switch button to toggle between Joystick and Flex Sensor Control modes.
 
     IF Control Mode is set to **Joystick**:
-    - The system works in joystick mode.
+    - The system works in Joystick Control mode.
 4. **Joystick Control MODE**:
     - Move the joystick up to lift the arm.
     - Move the joystick down to lower the arm.
