@@ -27,18 +27,20 @@ NOTE: For the Assistive Technologies Challenge, the user cannot use the flex sen
 
 1. **Power On**: Connect the battery to the system.
 2. **Control Mode**:
+
     IF Control Mode is set to **Flex Sensor**: 
     - By default, the system starts in Flex Sensor mode.
     - Press the switch button to toggle between joystick and flex sensor control modes.
+
     IF Control Mode is set to **Joystick**:
     - The system works in joystick mode.
-3. **Joystick Control MODE**:
+4. **Joystick Control MODE**:
     - Move the joystick up to lift the arm.
     - Move the joystick down to lower the arm.
-4. **Flex Sensor Control MODE**:
+5. **Flex Sensor Control MODE**:
     - Bend the flex sensor to lift the arm.
     - Straighten the flex sensor to lower the arm.
-5. **Battery Monitoring**:
+6. **Battery Monitoring**:
     - The system monitors battery voltage.
     - If the battery is low, the red LED will light up.
     - If the battery is medium, the blue LED will light up.
