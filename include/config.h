@@ -3,11 +3,6 @@
 
 #include <Arduino.h>
 
-// BRANCHEMENT SUR L'ARDUINO
-// Joystick: A0
-// Switch: A2
-// Flexsensor: A3
-// Motor: D8
 
 
 // Motor configuration - Pins for MD13S

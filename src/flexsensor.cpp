@@ -22,6 +22,7 @@ void readFLEXSENSOR(float *angle, bool verbose) {
 void flexsensorBasedStateChange(State *prevState, State *currentState, bool verbose) {
     float angle;
     readFLEXSENSOR(&angle, verbose);
+    *prevState = *currentState;
     if (angle <= FLEXSENSOR_THRESHOLD_UP) {
         *currentState = UP;
     } else if (angle >= FLEXSENSOR_THRESHOLD_DOWN){
