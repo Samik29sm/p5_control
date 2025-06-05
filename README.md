@@ -158,7 +158,7 @@ You can change the constants in the `constants.h` file to adjust the behavior of
 * `FLEX_SENSOR_THRESHOLD`: Threshold value for the flex sensor to trigger motor movement.
 * `FLEXSENSOR_THRESHOLD_UP`: Flex angle threshold to move arm up.
 * `FLEXSENSOR_THRESHOLD_DOWN`: Flex angle threshold to move arm down.
-* `LED_DISPLAY`: Whether or not to enable LED indicator output (1 = on, 0 = off).
+* `LED_DISPLAY`: Intensity of the LED indicator output.
 
 You also need to configure the flexsensor constants in the `config.h` file, such as:
 * `FLEXSENSOR_VCC`: The voltage supplied to the flex sensor (usually 5V).
