@@ -104,15 +104,15 @@ A `verbose` flag in `constants.h` allows for enabling or disabling debug output 
 
 | Component      | Pin                |
 |----------------|--------------------|
-| Joystick Y     | A0                 |
+| Joystick Y     | A1                 |
 | Switch         | A2                 |
 | Motor PWM      | D9                 |
 | Motor DIR      | D8                 |
 | Flex Sensor    | A4                 |
-| Battery Voltage| A1                 |
-| LED RED  | A3                 |
-| LED GREEN | A5                |
-| LED BLUE  | A6                |
+| Battery Voltage| A3                 |
+| LED RED  | D3                 |
+| LED GREEN | D5                |
+| LED BLUE  | D6                |
 
 If you don't have the same wiring as above, you can change the pin definitions in the `config.h` file.
 
